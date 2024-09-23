@@ -6,7 +6,7 @@ public class SimpleMovement : MonoBehaviour
     public Vector3 velocity;   // De snelheid van het object
 
     public float gravity = -9.81f;  // Gravitatieversnelling
-    public float moveSpeed = 5f;
+    //public float moveSpeed = 5f;
 
     // Update wordt één keer per frame aangeroepen
     void Update()
@@ -28,8 +28,8 @@ public class SimpleMovement : MonoBehaviour
         }
 
         // Update velocity met de bewegingsrichting vermenigvuldigd met de snelheid
-        velocity.x = moveDirection.x * moveSpeed;
-        velocity.z = moveDirection.z * moveSpeed;
+        //velocity.x = moveDirection.x * moveSpeed;
+        //velocity.z = moveDirection.z * moveSpeed;
 
         // Zwaartekracht toepassen op de y-snelheid (neerwaartse kracht)
         velocity.y += gravity * deltaTime;
