@@ -8,8 +8,8 @@ public class AABBCollision : MonoBehaviour
     public BoxCollider collider1;
     public BoxCollider collider2;
 
-    public Vector3 velocity1;  // Voeg snelheid toe voor object1
-    public Vector3 velocity2;  // Voeg snelheid toe voor object2
+    public SimpleMovement movement1; // Verwijzing naar het movement script van object1
+    public SimpleMovement movement2; // Verwijzing naar het movement script van object2
 
     private Vector3 halfExtents1;
     private Vector3 halfExtents2;
@@ -39,25 +39,17 @@ public class AABBCollision : MonoBehaviour
                 // Bereken de minimale verplaatsing om de objecten uit elkaar te duwen
                 Vector3 displacement = CalculateDisplacement(object1.position, halfExtents1, object2.position, halfExtents2);
 
-                // Verplaats beide objecten in tegengestelde richting van hun snelheid
+                // Verplaats beide objecten in tegengestelde richting
                 object1.position -= displacement * 0.5f;
                 object2.position += displacement * 0.5f;
 
-                // Om een meer realistische beweging te simuleren, pas ook de snelheid aan
-                velocity1 = -velocity1; // Reflecteer snelheid van object1
-                velocity2 = -velocity2; // Reflecteer snelheid van object2
-            }
-            else if (wasColliding)
-            {
-                Debug.Log("No Collision");
+                // Reflecteer de snelheid zodat objecten van elkaar af bewegen
+                movement1.velocity = Vector3.Reflect(movement1.velocity, displacement.normalized);
+                movement2.velocity = Vector3.Reflect(movement2.velocity, displacement.normalized);
             }
 
             wasColliding = isColliding;
         }
-
-        // Update objectposities met hun snelheid
-        object1.position += velocity1 * Time.deltaTime;
-        object2.position += velocity2 * Time.deltaTime;
     }
 
     bool IsColliding(Vector3 pos1, Vector3 halfExtents1, Vector3 pos2, Vector3 halfExtents2)
