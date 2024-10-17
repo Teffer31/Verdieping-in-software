@@ -466,8 +466,9 @@ GameObject:
   - component: {fileID: 723171754}
   - component: {fileID: 723171753}
   - component: {fileID: 723171752}
+  - component: {fileID: 723171757}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -486,7 +487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
-  gravity: 0
+  gravity: -9.81
+  drag: 0.99
 --- !u!65 &723171753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -520,7 +522,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: ca585bf94611b744e86572f7511637af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -563,8 +565,23 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &723171757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723171751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4422d150eac0e4ab8f2e52739b538a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldMinBounds: {x: -7, y: 1, z: -7}
+  worldMaxBounds: {x: 7, y: 7, z: 7}
+  movement: {fileID: 723171752}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,8 +644,9 @@ GameObject:
   - component: {fileID: 1521122830}
   - component: {fileID: 1521122829}
   - component: {fileID: 1521122828}
+  - component: {fileID: 1521122833}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -647,7 +665,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
-  gravity: 0
+  gravity: -9.81
+  drag: 0.99
 --- !u!65 &1521122829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -681,7 +700,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0ed674bc808ee49bdb967f92d3abb4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -724,8 +743,23 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1521122833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521122827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4422d150eac0e4ab8f2e52739b538a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldMinBounds: {x: -7, y: 1, z: -7}
+  worldMaxBounds: {x: 7, y: 7, z: 7}
+  movement: {fileID: 1521122828}
 --- !u!1 &1688209786
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,12 +789,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7249f357c5a949d46a57c707ac0e91e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  object1: {fileID: 723171756}
-  object2: {fileID: 1521122832}
-  collider1: {fileID: 723171753}
-  collider2: {fileID: 1521122829}
-  velocity1: {x: 0, y: 0, z: 0}
-  velocity2: {x: 0, y: 0, z: 0}
+  object1: {fileID: 1521122832}
+  object2: {fileID: 723171756}
+  collider1: {fileID: 1521122829}
+  collider2: {fileID: 723171753}
+  movement1: {fileID: 1521122828}
+  movement2: {fileID: 723171752}
 --- !u!4 &1688209788
 Transform:
   m_ObjectHideFlags: 0
