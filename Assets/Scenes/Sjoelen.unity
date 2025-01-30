@@ -239,6 +239,8 @@ MonoBehaviour:
   drag: 0
   bounciness: 0
   friction: 0
+  mass: 1
+  isStatic: 1
 --- !u!114 &15273785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +799,8 @@ MonoBehaviour:
   drag: 0
   bounciness: 0
   friction: 0
+  mass: 1
+  isStatic: 1
 --- !u!114 &435783415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -928,6 +932,8 @@ MonoBehaviour:
   drag: 0
   bounciness: 0
   friction: 0
+  mass: 1
+  isStatic: 1
 --- !u!114 &460677552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,6 +987,8 @@ MonoBehaviour:
   drag: 0.99
   bounciness: 0.8
   friction: 0.1
+  mass: 1
+  isStatic: 0
 --- !u!65 &723171753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1239,6 +1247,8 @@ MonoBehaviour:
   drag: 0
   bounciness: 0
   friction: 0
+  mass: 1
+  isStatic: 1
 --- !u!114 &1395484006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,6 +1302,8 @@ MonoBehaviour:
   drag: 0.99
   bounciness: 0.8
   friction: 0.1
+  mass: 1
+  isStatic: 0
 --- !u!65 &1521122829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1567,6 +1579,8 @@ MonoBehaviour:
   drag: 0
   bounciness: 0
   friction: 0
+  mass: 1
+  isStatic: 1
 --- !u!114 &2139293554
 MonoBehaviour:
   m_ObjectHideFlags: 0
