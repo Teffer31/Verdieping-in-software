@@ -793,12 +793,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7249f357c5a949d46a57c707ac0e91e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  object1: {fileID: 1521122832}
-  object2: {fileID: 723171756}
-  collider1: {fileID: 1521122829}
-  collider2: {fileID: 723171753}
-  movement1: {fileID: 1521122828}
-  movement2: {fileID: 723171752}
+  objects:
+  - transform: {fileID: 1521122832}
+    collider: {fileID: 1521122829}
+    movement: {fileID: 1521122828}
+    isStatic: 0
+  - transform: {fileID: 723171756}
+    collider: {fileID: 723171753}
+    movement: {fileID: 723171752}
+    isStatic: 0
+  substeps: 5
 --- !u!4 &1688209788
 Transform:
   m_ObjectHideFlags: 0
