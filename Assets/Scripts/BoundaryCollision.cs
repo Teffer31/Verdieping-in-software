@@ -11,32 +11,28 @@ public class BoundaryCollision : MonoBehaviour
 
     void Update()
     {
-        // Get the current position and velocity of the object
         Vector3 position = transform.position;
         Vector3 velocity = movement.velocity;
 
-        // Check the boundaries on the X-axis
         if (position.x < worldMinBounds.x || position.x > worldMaxBounds.x)
         {
-            velocity.x = -velocity.x; // Reflect the velocity on the X-axis to bounce the object back
-            position.x = Mathf.Clamp(position.x, worldMinBounds.x, worldMaxBounds.x); // Keep the position within the X-axis boundaries
+            velocity.x = -velocity.x * movement.bounciness; // Reflecteer en pas bounciness toe
+            position.x = Mathf.Clamp(position.x, worldMinBounds.x, worldMaxBounds.x);
         }
 
-        // Check the boundaries on the Y-axis (if needed for 3D worlds)
         if (position.y < worldMinBounds.y || position.y > worldMaxBounds.y)
         {
-            velocity.y = -velocity.y; // Reflect the velocity on the Y-axis to bounce the object back
-            position.y = Mathf.Clamp(position.y, worldMinBounds.y, worldMaxBounds.y); // Keep the position within the Y-axis boundaries
+            velocity.y = -velocity.y * movement.bounciness; // Reflecteer en pas bounciness toe
+            position.y = Mathf.Clamp(position.y, worldMinBounds.y, worldMaxBounds.y);
         }
 
-        // Check the boundaries on the Z-axis
         if (position.z < worldMinBounds.z || position.z > worldMaxBounds.z)
         {
-            velocity.z = -velocity.z; // Reflect the velocity on the Z-axis to bounce the object back
-            position.z = Mathf.Clamp(position.z, worldMinBounds.z, worldMaxBounds.z); // Keep the position within the Z-axis boundaries
+            velocity.z = -velocity.z * movement.bounciness; // Reflecteer en pas bounciness toe
+            position.z = Mathf.Clamp(position.z, worldMinBounds.z, worldMaxBounds.z);
         }
 
-        transform.position = position; // Update the object's new position
-        movement.velocity = velocity; // Update the object's velocity in the movement script
+        transform.position = position;
+        movement.velocity = velocity;
     }
 }

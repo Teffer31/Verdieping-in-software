@@ -486,9 +486,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1322432a0af8f6e40880a6ad65e5a754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 0}
+  velocity: {x: -0.33, y: 0, z: 0}
   gravity: -9.81
   drag: 0.99
+  bounciness: 0.8
+  friction: 0.1
 --- !u!65 &723171753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -667,6 +669,8 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   gravity: -9.81
   drag: 0.99
+  bounciness: 0.8
+  friction: 0.1
 --- !u!65 &1521122829
 BoxCollider:
   m_ObjectHideFlags: 0
