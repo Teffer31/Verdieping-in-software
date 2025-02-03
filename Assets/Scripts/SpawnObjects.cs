@@ -8,7 +8,7 @@ public class SpawnObjects : MonoBehaviour
 
     private float timer; // Tracks time between spawns
 
-    void Update()
+    void FixedUpdate()
     {
         // Increment timer by the time elapsed since the last frame
         timer += Time.deltaTime;

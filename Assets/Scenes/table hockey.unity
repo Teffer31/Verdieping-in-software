@@ -495,7 +495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 371626652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.53, z: -1.58}
+  m_LocalPosition: {x: 0, y: 1.53, z: -5.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 1058479989}
   - component: {fileID: 1058479988}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: puck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1013,7 +1013,7 @@ GameObject:
   - component: {fileID: 1215984437}
   - component: {fileID: 1215984436}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1511,7 +1511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662864656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.215, z: -1.731}
+  m_LocalPosition: {x: -0.58, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1646,28 +1646,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7249f357c5a949d46a57c707ac0e91e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - transform: {fileID: 1662864657}
-    collider: {fileID: 1662864658}
-    movement: {fileID: 1662864661}
-  - transform: {fileID: 1215984432}
-    collider: {fileID: 1215984433}
-    movement: {fileID: 1215984437}
-  - transform: {fileID: 1395484004}
-    collider: {fileID: 1395484001}
-    movement: {fileID: 1395484005}
-  - transform: {fileID: 1321509396}
-    collider: {fileID: 1321509393}
-    movement: {fileID: 1321509392}
-  - transform: {fileID: 118283332}
-    collider: {fileID: 118283329}
-    movement: {fileID: 118283328}
-  - transform: {fileID: 1921362585}
-    collider: {fileID: 1921362582}
-    movement: {fileID: 1921362581}
-  - transform: {fileID: 1058479993}
-    collider: {fileID: 1058479990}
-    movement: {fileID: 1058479988}
 --- !u!4 &1688209788
 Transform:
   m_ObjectHideFlags: 0

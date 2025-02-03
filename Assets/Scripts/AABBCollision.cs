@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class AABBCollision : MonoBehaviour
+public class AABBCollisionManager : MonoBehaviour
 {
     [System.Serializable]
     public struct PhysicsObject
@@ -13,19 +13,18 @@ public class AABBCollision : MonoBehaviour
 
     public List<PhysicsObject> objects;
 
-    void Update()
+    void FixedUpdate()
     {
-        // Loop through all objects to check for collisions
         for (int i = 0; i < objects.Count; i++)
         {
             for (int j = i + 1; j < objects.Count; j++)
             {
-                CheckCollision(objects[i], objects[j]);
+                CheckAndResolveCollision(objects[i], objects[j]);
             }
         }
     }
 
-    void CheckCollision(PhysicsObject obj1, PhysicsObject obj2)
+    void CheckAndResolveCollision(PhysicsObject obj1, PhysicsObject obj2)
     {
         Vector3 halfExtents1 = obj1.collider.bounds.extents;
         Vector3 halfExtents2 = obj2.collider.bounds.extents;
@@ -33,47 +32,26 @@ public class AABBCollision : MonoBehaviour
         if (!IsColliding(obj1.transform.position, halfExtents1, obj2.transform.position, halfExtents2))
             return;
 
+        // Calculate displacement to separate the objects
         Vector3 displacement = CalculateDisplacement(obj1.transform.position, halfExtents1, obj2.transform.position, halfExtents2);
         Vector3 normal = displacement.normalized;
 
-        // Debugging: Visualize collision normals and displacement
-        Debug.DrawLine(obj1.transform.position, obj1.transform.position + normal * 2, Color.red, 1f);
-        Debug.Log($"Collision Detected: {obj1.transform.name} -> {obj2.transform.name}, Normal: {normal}");
+        // Ensure complete separation
+        SeparateObjects(obj1, obj2, displacement);
 
-        // Flatten the normal to avoid upward movement
-        if (Mathf.Abs(normal.y) > 0.5f)
-        {
-            normal.y = 0;
-            normal.Normalize();
-        }
-
+        // Apply physics response after separation
         if (obj1.movement.isStatic)
         {
-            ResolveStaticCollision(obj2, displacement, normal);
+            ReflectVelocity(obj2, normal);
         }
         else if (obj2.movement.isStatic)
         {
-            ResolveStaticCollision(obj1, -displacement, -normal);
+            ReflectVelocity(obj1, -normal);
         }
         else
         {
-            // Both objects are dynamic
-            obj1.transform.position -= displacement * 0.5f;
-            obj2.transform.position += displacement * 0.5f;
-
             ApplyImpulse(obj1, obj2, normal);
         }
-    }
-
-    void ResolveStaticCollision(PhysicsObject dynamicObj, Vector3 displacement, Vector3 normal)
-    {
-        // Adjust position of the dynamic object
-        dynamicObj.transform.position += displacement;
-
-        // Reflect velocity, restricting Y-axis momentum
-        Vector3 reflectedVelocity = Vector3.Reflect(dynamicObj.movement.velocity, normal);
-        reflectedVelocity.y = 0; // Remove Y-axis component
-        dynamicObj.movement.velocity = reflectedVelocity * dynamicObj.movement.bounciness;
     }
 
     bool IsColliding(Vector3 pos1, Vector3 halfExtents1, Vector3 pos2, Vector3 halfExtents2)
@@ -90,11 +68,37 @@ public class AABBCollision : MonoBehaviour
         float overlapZ = Mathf.Min(pos1.z + halfExtents1.z, pos2.z + halfExtents2.z) - Mathf.Max(pos1.z - halfExtents1.z, pos2.z - halfExtents2.z);
 
         if (overlapX < overlapY && overlapX < overlapZ)
-            return new Vector3(overlapX, 0, 0); // Resolve along X-axis
+            return new Vector3(pos1.x > pos2.x ? overlapX : -overlapX, 0, 0);
         else if (overlapY < overlapX && overlapY < overlapZ)
-            return new Vector3(0, overlapY, 0); // Resolve along Y-axis
+            return new Vector3(0, pos1.y > pos2.y ? overlapY : -overlapY, 0);
         else
-            return new Vector3(0, 0, overlapZ); // Resolve along Z-axis
+            return new Vector3(0, 0, pos1.z > pos2.z ? overlapZ : -overlapZ);
+    }
+
+    void SeparateObjects(PhysicsObject obj1, PhysicsObject obj2, Vector3 displacement)
+    {
+        // Ensure complete separation until no overlap exists
+        while (IsColliding(obj1.transform.position, obj1.collider.bounds.extents, obj2.transform.position, obj2.collider.bounds.extents))
+        {
+            if (obj1.movement.isStatic)
+            {
+                obj2.transform.position += displacement.normalized * 0.01f;
+            }
+            else if (obj2.movement.isStatic)
+            {
+                obj1.transform.position -= displacement.normalized * 0.01f;
+            }
+            else
+            {
+                obj1.transform.position -= displacement.normalized * 0.005f;
+                obj2.transform.position += displacement.normalized * 0.005f;
+            }
+        }
+    }
+
+    void ReflectVelocity(PhysicsObject dynamicObj, Vector3 normal)
+    {
+        dynamicObj.movement.velocity = Vector3.Reflect(dynamicObj.movement.velocity, normal) * dynamicObj.movement.bounciness;
     }
 
     void ApplyImpulse(PhysicsObject obj1, PhysicsObject obj2, Vector3 normal)

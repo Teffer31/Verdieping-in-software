@@ -6,7 +6,7 @@ public class BoundaryCollision : MonoBehaviour
     public Vector3 worldMaxBounds;
     public CustomRigidbody movement;
 
-    void Update()
+    void FixedUpdate()
     {
         if (movement.isStatic) return;
 

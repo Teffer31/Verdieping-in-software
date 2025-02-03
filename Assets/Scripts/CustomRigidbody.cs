@@ -10,7 +10,7 @@ public class CustomRigidbody : MonoBehaviour
     public float mass = 1f; // Mass for physics calculations
     public bool isStatic = false; // Determines if the object moves
 
-    void Update()
+    void FixedUpdate()
     {
         if (isStatic) return; // Static objects don't move
 
