@@ -1,20 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Manages Axis-Aligned Bounding Box (AABB) collision detection and resolution.
+/// Ensures objects do not clip into each other and apply proper physics response.
+/// </summary>
 public class AABBCollisionManager : MonoBehaviour
 {
     [System.Serializable]
     public struct PhysicsObject
     {
-        public Transform transform;
-        public BoxCollider collider;
-        public CustomRigidbody movement;
+        public Transform transform;  // Object Transform
+        public BoxCollider collider; // Object Collider
+        public CustomRigidbody movement; // Custom Rigidbody for physics properties
     }
 
-    public List<PhysicsObject> objects;
+    public List<PhysicsObject> objects; // List of physics objects to check for collisions
 
     void FixedUpdate()
     {
+        // Check collisions between all objects
         for (int i = 0; i < objects.Count; i++)
         {
             for (int j = i + 1; j < objects.Count; j++)
@@ -24,6 +29,9 @@ public class AABBCollisionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if two objects are colliding and resolves the collision.
+    /// </summary>
     void CheckAndResolveCollision(PhysicsObject obj1, PhysicsObject obj2)
     {
         Vector3 halfExtents1 = obj1.collider.bounds.extents;
@@ -54,6 +62,9 @@ public class AABBCollisionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if two objects are colliding based on AABB detection.
+    /// </summary>
     bool IsColliding(Vector3 pos1, Vector3 halfExtents1, Vector3 pos2, Vector3 halfExtents2)
     {
         return (pos1.x - halfExtents1.x < pos2.x + halfExtents2.x && pos1.x + halfExtents1.x > pos2.x - halfExtents2.x) &&
@@ -61,6 +72,9 @@ public class AABBCollisionManager : MonoBehaviour
                (pos1.z - halfExtents1.z < pos2.z + halfExtents2.z && pos1.z + halfExtents1.z > pos2.z - halfExtents2.z);
     }
 
+    /// <summary>
+    /// Calculates the displacement needed to separate two overlapping objects.
+    /// </summary>
     Vector3 CalculateDisplacement(Vector3 pos1, Vector3 halfExtents1, Vector3 pos2, Vector3 halfExtents2)
     {
         float overlapX = Mathf.Min(pos1.x + halfExtents1.x, pos2.x + halfExtents2.x) - Mathf.Max(pos1.x - halfExtents1.x, pos2.x - halfExtents2.x);
@@ -75,36 +89,40 @@ public class AABBCollisionManager : MonoBehaviour
             return new Vector3(0, 0, pos1.z > pos2.z ? overlapZ : -overlapZ);
     }
 
+    /// <summary>
+    /// Ensures objects are fully separated and not overlapping.
+    /// </summary>
     void SeparateObjects(PhysicsObject obj1, PhysicsObject obj2, Vector3 displacement)
     {
-        // Ensure complete separation until no overlap exists
-        while (IsColliding(obj1.transform.position, obj1.collider.bounds.extents, obj2.transform.position, obj2.collider.bounds.extents))
+        if (obj1.movement.isStatic)
         {
-            if (obj1.movement.isStatic)
-            {
-                obj2.transform.position += displacement.normalized * 0.01f;
-            }
-            else if (obj2.movement.isStatic)
-            {
-                obj1.transform.position -= displacement.normalized * 0.01f;
-            }
-            else
-            {
-                obj1.transform.position -= displacement.normalized * 0.005f;
-                obj2.transform.position += displacement.normalized * 0.005f;
-            }
+            obj2.transform.position += displacement;
+        }
+        else if (obj2.movement.isStatic)
+        {
+            obj1.transform.position -= displacement;
+        }
+        else
+        {
+            obj1.transform.position -= displacement * 0.5f;
+            obj2.transform.position += displacement * 0.5f;
         }
     }
 
+    /// <summary>
+    /// Reflects the velocity of an object upon collision.
+    /// </summary>
     void ReflectVelocity(PhysicsObject dynamicObj, Vector3 normal)
     {
         dynamicObj.movement.velocity = Vector3.Reflect(dynamicObj.movement.velocity, normal) * dynamicObj.movement.bounciness;
     }
 
+    /// <summary>
+    /// Applies an impulse to objects based on collision impact.
+    /// </summary>
     void ApplyImpulse(PhysicsObject obj1, PhysicsObject obj2, Vector3 normal)
     {
         float elasticity = 0.8f;
-
         float mass1 = obj1.movement.mass;
         float mass2 = obj2.movement.mass;
 
